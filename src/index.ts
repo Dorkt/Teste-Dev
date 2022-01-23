@@ -1,8 +1,11 @@
 import { SetupServer } from './server';
-import config from 'config';
+import dontev from 'dotenv'
 
 (async (): Promise<void> => {
-    const server = new SetupServer(config.get('App.port'));
+    dontev.config();
+    const port = process.env.APP_PORT ? process.env.APP_PORT : '8000';
+
+    const server = new SetupServer(parseInt(port));
     await server.init();
     server.start();
 })();

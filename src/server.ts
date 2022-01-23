@@ -1,7 +1,7 @@
 import './utils/module-alias';
 import { Server } from '@overnightjs/core';
 import bodyParser from 'body-parser';
-import { TeacherController } from './controllers/users.controller';
+import { UsersController } from './controllers/users.controller';
 import * as database from '@src/database/database';
 import { Application } from 'express';
 import { ClassesController } from './controllers/classes.controller';
@@ -23,10 +23,10 @@ export class SetupServer extends Server {
   }
 
   private setupControllers(): void {
-    const teacherController = new TeacherController();
+    const userController = new UsersController();
     const classesController = new ClassesController();
 
-    this.addControllers([teacherController, classesController]);
+    this.addControllers([userController, classesController]);
   }
 
   private async databaseSetup(): Promise<void> {

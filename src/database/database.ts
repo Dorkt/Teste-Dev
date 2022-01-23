@@ -1,10 +1,12 @@
-import config, { IConfig } from 'config';
 import mongoose, { Mongoose } from 'mongoose';
+import dontev from 'dotenv'
 
-const dbConfig: IConfig = config.get('App.database');
+dontev.config()
+
+const database: string = process.env.CONNECTION_DB ? process.env.CONNECTION_DB : '';
 
 export const connect = async (): Promise<Mongoose | void> =>
-  mongoose.connect(dbConfig.get('mongoUrl'), {
+  mongoose.connect(database, {
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
