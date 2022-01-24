@@ -14,10 +14,12 @@ describe('Users functional tests', () => {
       };
 
       const response = await global.testRequest.post('/users/created').send(newUser);
+      
       expect(response.status).toBe(201);
       await expect(
         AuthService.validatePassword(newUser.password, response.body.password)
       ).resolves.toBeTruthy();
+
       expect(response.body).toEqual(
         expect.objectContaining({
           ...newUser,

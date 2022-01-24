@@ -1,9 +1,7 @@
 
 # Teste Dev - Tindin
 
-
 **Contato:**
-
 
 - Email: Gabrieldorkt@gmail.com
 
@@ -11,9 +9,7 @@
 
 - Linkedin: linkedin.com/in/gabriel-duque-aba0891a3/
 
-
 ## Descrição Projeto:
-
 
 Eu optei por seguir o padrão de desenvolvimento do curso do youtube ministrado pelo "Waldemar Neto", principalmente pela familiaridade que o pacote que ele usa para trabalhar com rotas o "overnightjs", em vista que se assemelha muito ao pacote que eu trabalho no meu estágio que é o "inversify-express", onde trabalho com uma infraestrutura de microsserviços.
 
@@ -33,7 +29,7 @@ Falando sobre as rotas ligadas diretamente as classes, o mais diferente que apli
 
 Em rotas ligadas diretamente aos comentários, optei por fazer duas rotas de busca, e optei por modificar a que está no documento em que era apenas "/classes/comments", adicionei o "/all", no fim dessa rota para retornar todos os comentários existentes, e para comentários específicos de determinada aula, criei a rota "comments/:id", assim passando o id no "params", é possível encontrar comentários de apenas determinada aula.
 
-### Informações adicionais
+### Informações adicionais 
 
 Optei pelo uso da biblioteca jsobWebToken para poder validar as autenticações de acesso.
 
@@ -44,3 +40,11 @@ Usei da biblioteca dotenv para aplicar variáveis de ambientes, o arquivo está 
 Usei de jest para os teste.
 
 ### Aplicação em produção
+
+Como tenho aptidão com o uso de heroku para colocar aplicações em produção, eu escolheria essa ferramenta para por meu serviço em produção.
+
+Criaria a instância do heroku no projeto usando "heroku create", e trabalharia em cima do git para poder sempre fazer atualizações futuras na produção, usando de novos pushs na branch master do meu projeto, para a cada novo push ocorrer um novo deploy do sistema no heroku.
+
+### Considerações finais
+
+Foi incrível participar do teste, me esforcei ao máximo para entregar o que foi possível fazer no tempo livre que tive. Agradeço pela oportunidade de ao menos me convidarem para o teste, e gostaria de dizer que sou uma pessoa que está disposta a sempre aprender mais e mais.

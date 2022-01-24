@@ -4,7 +4,7 @@ export interface Comments {
     _id: string,
     id_class: string,
     comment: string,
-    date_created: string,
+    date_created: Date,
     created_at
 }
 

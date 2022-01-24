@@ -125,12 +125,12 @@ export class ClassesController extends BaseController {
 
   // Routes for comments
   @Post('comments')
-  public async createComment(req: Request, res: Response): Promise<void> {
+  public async createComment(req: Request, res: Response): Promise<Response | void> {
     try {
       const classe: any = await Classe.findOne({ _id: req.body.id_class })
 
       if(!classe) {
-        res.status(400).send({
+        return res.status(400).send({
           code: 400,
           error: 'Classe not found, comments is not created, please enter a existing id Classe.'
         })
@@ -147,7 +147,7 @@ export class ClassesController extends BaseController {
       const valueComments = classe.total_comments + 1
       await Classe.findOneAndUpdate({ _id: req.body.id_class }, { total_comments: valueComments } );
 
-      res.status(201).send(result);
+      return res.status(201).send(result);
     } catch (error: any) {
       this.sendCreateUpdateErrorResponse(res, error);
     }
