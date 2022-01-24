@@ -169,16 +169,15 @@ export class ClassesController extends BaseController {
     } catch (error: any) {
       this.sendCreateUpdateErrorResponse(res, error);
     }
-
   }
 
   @Delete('comments/:id')
-  public async deleteComment(req: Request, res: Response): Promise<void> {
+  public async deleteComment(req: Request, res: Response): Promise<Response | any> {
     try {
       const comments = await Comments.findById(req.params.id)
       
       if(!comments) {
-        res.status(400).send({
+        return res.status(400).send({
           code: 400,
           error: 'Comment not found, please enter a existing id of comment.'
         })
@@ -191,7 +190,10 @@ export class ClassesController extends BaseController {
 
       await Classe.findOneAndUpdate({ _id: classe._id }, { total_comments: valueComments } );
       
-      res.status(200).send({message: 'Comment remove successfully'})
+      return res.status(200).send({
+        code: 200,
+        message: 'Comment remove successfully'
+      });
     } catch (error: any) {
       this.sendCreateUpdateErrorResponse(res, error);
     }

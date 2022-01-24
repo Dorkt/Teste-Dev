@@ -123,4 +123,92 @@ describe('Comments functional tests', () => {
             expect(response.body[1]).toEqual(comment2.body);
         });
     });
+
+    describe('When get comments by Class Id', () => {
+        it('should return all comments existing', async () => {
+            const newClass = {
+                "name": "Classe de Finanças",
+                "description": "Aula com o objetivo de ensinar crianças pequenas a serem adultos conscientes, acerca das suas finanças.",
+                "video": "url.com.br",
+                "data_init": "01.10.2022",
+                "data_end": "05.11.2022"
+            }
+
+            const classe = new Classe(newClass);
+            const classeNew = await classe.save();
+
+            const newComment = {
+                "id_class": classeNew._id,
+                "comment": "Ótima aula!!!",
+                "date_created": classeNew.date_created
+            };
+
+            const newComment2 = {
+                "id_class": classeNew._id,
+                "comment": "Aula essencial para os estudos!!!",
+                "date_created": classeNew.date_created
+            };
+
+
+            const comment1 = await global.testRequest.post('/classes/comments/').set({ 'Authorization': `Bearer ${token}` }).send(newComment);
+            const comment2 = await global.testRequest.post('/classes/comments').set({ 'Authorization': `Bearer ${token}` }).send(newComment2);
+
+            const response = await global.testRequest.get(`/classes/comments/byclasse/${classe._id}`).set({ 'Authorization': `Bearer ${token}` });
+
+            expect(response.status).toBe(200);
+            expect(response.body.length).toBe(2);
+            expect(response.body[0]).toEqual(comment1.body);
+            expect(response.body[1]).toEqual(comment2.body);
+        });
+    });
+
+    describe('When delete comments by Id', () => {
+        it('should return successfully delete comments', async () => {
+            const newClass = {
+                "name": "Classe de Finanças",
+                "description": "Aula com o objetivo de ensinar crianças pequenas a serem adultos conscientes, acerca das suas finanças.",
+                "video": "url.com.br",
+                "data_init": "01.10.2022",
+                "data_end": "05.11.2022"
+            }
+
+            const classe = new Classe(newClass);
+            const classeNew = await classe.save();
+
+            const newComment = {
+                "id_class": classeNew._id,
+                "comment": "Ótima aula!!!",
+                "date_created": classeNew.date_created
+            };
+
+            const comment = new Comments(newComment);
+            const commentNew = await comment.save();
+
+            const responseFirstGet = await global.testRequest.get(`/classes/comments/all`).set({ 'Authorization': `Bearer ${token}` });
+            expect(responseFirstGet.body.length).toBe(1);
+
+            const responseDelete = await global.testRequest.delete(`/classes/comments/${commentNew._id}`).set({ 'Authorization': `Bearer ${token}` });
+
+            const responseSecondeGet = await global.testRequest.get(`/classes/comments/all`).set({ 'Authorization': `Bearer ${token}` });
+            expect(responseSecondeGet.body.length).toBe(0);
+
+
+            expect(responseDelete.status).toBe(200);
+            expect(responseDelete.body).toEqual({
+                code: 200,
+                message: 'Comment remove successfully'
+            });
+        });
+
+        it('should return error, not found comment to delete', async () => {
+            const responseDelete = await global.testRequest.delete(`/classes/comments/61edfdee8323ae1e77ab5a04`).set({ 'Authorization': `Bearer ${token}` });
+
+            expect(responseDelete.status).toBe(400);
+            expect(responseDelete.body).toEqual({
+                code: 400,
+                error: 'Comment not found, please enter a existing id of comment.'
+            });
+        });
+    });
+    
 });
