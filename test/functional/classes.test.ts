@@ -79,4 +79,31 @@ describe('Classe functional tests', () => {
             });
         });
     });
+
+    describe('When get all classes', () => {
+        it('should return all classes existing', async () => {
+            const newClass = {
+                "name": "Classe de Finanças",
+                "description": "Aula com o objetivo de ensinar crianças pequenas a serem adultos conscientes, acerca das suas finanças.",
+                "video": "url.com.br",
+                "data_init": "01.10.2022",
+                "data_end": "05.11.2022"
+            }
+
+            const newClass2 = {
+                "name": "Classe de Finanças versao 2",
+                "description": "Aula com o objetivo de ensinar crianças pequenas a serem adultos conscientes, acerca das suas finanças.",
+                "video": "url.com.br",
+                "data_init": "01.10.2022",
+                "data_end": "05.11.2022"
+            }
+
+            await global.testRequest.post('/classes').set({ 'Authorization': `Bearer ${token}` }).send(newClass);
+            await global.testRequest.post('/classes').set({ 'Authorization': `Bearer ${token}` }).send(newClass2);
+
+            const response = await global.testRequest.get('/classes').set({ 'Authorization': `Bearer ${token}` });
+            expect(response.status).toBe(200);
+            expect(response.body.length).toBe(2);
+        });
+    });
 });

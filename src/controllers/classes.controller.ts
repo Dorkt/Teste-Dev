@@ -10,7 +10,7 @@ import { TokenValidation } from '../../middlewares/auth';
 @ClassMiddleware(TokenValidation)
 export class ClassesController extends BaseController {
   @Get('')
-  public async getAllClasses(req: Request, res: Response): Promise<void> {
+  public async getAllClasses(req: Request, res: Response): Promise<Response | void> {
     try {
       const classes = await Classe.find();
 
@@ -37,7 +37,7 @@ export class ClassesController extends BaseController {
 
       const classesWithLastComments = await Promise.all(promiseClasses)
 
-      res.status(200).send(classesWithLastComments)
+      return res.status(200).send(classesWithLastComments)
     } catch (error: any) {
       this.sendCreateUpdateErrorResponse(res, error);
     }
@@ -55,11 +55,11 @@ export class ClassesController extends BaseController {
   }
 
   @Post('/')
-  public async postNewClasse(req: Request, res: Response): Promise<void> {
+  public async postNewClasse(req: Request, res: Response): Promise<Response | void> {
     try {
       const classe = new Classe(req.body);
       const result = await classe.save();
-      res.status(201).send(result);
+      return res.status(201).send(result);
     } catch (error: any) {
       this.sendCreateUpdateErrorResponse(res, error);
     }
