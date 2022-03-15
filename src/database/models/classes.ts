@@ -16,12 +16,12 @@ const schema = new mongoose.Schema(
     {
         name: { type: String, required: true },
         description: { type: String, required: true },
-        video: { type: String, required: true },
-        data_init: { type: Date, required: true },
-        data_end: { type: Date, required: true },
-        date_created: { type: Date, required: true, default: Date.now },
-        date_updated: { type: Date, required: true, default: Date.now },
-        total_comments: { type: Number, required: true, default: 0 },
+        video: { type: String },
+        data_init: { type: Date },
+        data_end: { type: Date },
+        date_created: { type: Date, default: Date.now },
+        date_updated: { type: Date, default: Date.now },
+        total_comments: { type: Number, default: 0 },
     },
     {
         timestamps: { createdAt: 'date_created', updatedAt: 'date_updated' },
